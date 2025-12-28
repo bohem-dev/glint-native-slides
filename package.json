@@ -1,0 +1,23 @@
+{
+  "name": "glint-native-slides",
+  "version": "1.0.0",
+  "description": "A liquid-smooth local viewer for PowerPoint (.pptx) files.",
+  "main": "main.js",
+  "scripts": {
+    "dev": "node esbuild.config.mjs",
+    "build": "node esbuild.config.mjs production",
+    "version": "node -e \"const fs = require('fs'); const m = JSON.parse(fs.readFileSync('manifest.json', 'utf8')); m.version = process.env.npm_package_version; fs.writeFileSync('manifest.json', JSON.stringify(m, null, '\t')); const v = JSON.parse(fs.readFileSync('versions.json', 'utf8') || '{}'); v[m.version] = m.minAppVersion; fs.writeFileSync('versions.json', JSON.stringify(v, null, '\t'));\" && git add manifest.json versions.json"
+  },
+  "dependencies": {
+    "pptx-preview": "^1.0.7"
+  },
+  "devDependencies": {
+    "@codemirror/language": "^6.12.1",
+    "@codemirror/state": "^6.5.3",
+    "@codemirror/view": "^6.39.7",
+    "builtin-modules": "^3.3.0",
+    "esbuild": "^0.27.2",
+    "obsidian": "^1.11.0",
+    "tslib": "^2.8.1"
+  }
+}

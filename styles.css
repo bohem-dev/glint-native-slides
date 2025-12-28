@@ -1,0 +1,190 @@
+/* --- Full Page View Workspace --- */
+.pptx-view-workspace {
+    background-color: var(--background-secondary); 
+    overflow: auto !important; 
+    height: 100%;
+    width: 100%;
+    display: block; 
+    position: relative;
+}
+
+.pptx-viewer-container {
+    padding: 40px 0;
+    transform-origin: 0 0;
+    opacity: 1; 
+}
+
+.pptx-viewer-container.hidden {
+    opacity: 0;
+}
+
+/* --- LIQUID GLASS LOADER --- */
+
+.pptx-loader-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    
+    /* Tint behind loader */
+    background: rgba(var(--background-primary-rgb), 0.6); 
+    
+    /* Blur Intensity */
+    backdrop-filter: blur(15px); 
+    -webkit-backdrop-filter: blur(15px);
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    opacity: 0;
+    pointer-events: none;
+    
+    /* Fade Out Speed */
+    transition: opacity 0.5s ease-out;
+}
+
+.pptx-loader-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* Wrapper */
+.pptx-glass-wrapper {
+    position: relative;
+    width: 140px;
+    height: 190px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Blob */
+.pptx-liquid-blob {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #382bf0, #9f6bf7);
+    filter: blur(25px); 
+    opacity: 0.7;
+    animation: moveBlob 4s infinite ease-in-out alternate;
+    z-index: 0;
+}
+
+/* Glass Card */
+.pptx-glass-card {
+    width: 100%;
+    height: 100%;
+    z-index: 1; 
+    border-radius: 12px;
+    
+    /* Adaptive Background */
+    background: linear-gradient(
+        135deg, 
+        rgba(var(--background-primary-rgb), 0.6), 
+        rgba(var(--background-secondary-rgb), 0.4)
+    );
+
+    border: 1px solid rgba(var(--interactive-accent-rgb), 0.4);
+    
+    box-shadow: 
+        0 15px 40px 0 rgba(0, 0, 0, 0.2), 
+        inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+        
+    backdrop-filter: blur(12px); 
+    -webkit-backdrop-filter: blur(12px);
+    
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 12px;
+    
+    animation: floatCard 6s ease-in-out infinite;
+}
+
+/* --- WIREFRAME LINES (Fixed Visibility) --- */
+.pptx-glass-line {
+    height: 6px;
+    border-radius: 4px;
+    
+    /* 1. Explicit White (40% Opacity) */
+    background: rgba(255, 255, 255, 0.4); 
+    
+    /* 2. White Border */
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    
+    /* 3. Shadow ensures visibility on light backgrounds */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0; 
+}
+
+.pptx-glass-line:nth-child(1) { width: 60%; }
+.pptx-glass-line:nth-child(2) { width: 90%; }
+.pptx-glass-line:nth-child(3) { width: 80%; }
+.pptx-glass-line:nth-child(4) { width: 40%; margin-top: 10px; }
+.pptx-glass-line:nth-child(5) { width: 70%; }
+
+/* Shine Effect */
+.pptx-glass-line::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.9), 
+        transparent
+    );
+    transform: translateX(-100%);
+    animation: scanLine 2s infinite cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+/* Stagger Delays */
+.pptx-glass-line:nth-child(1)::after { animation-delay: 0.1s; }
+.pptx-glass-line:nth-child(2)::after { animation-delay: 0.3s; }
+.pptx-glass-line:nth-child(3)::after { animation-delay: 0.6s; }
+.pptx-glass-line:nth-child(4)::after { animation-delay: 0.9s; }
+.pptx-glass-line:nth-child(5)::after { animation-delay: 1.2s; }
+
+.pptx-loading-text {
+    margin-top: 40px;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 600;
+    opacity: 0.8;
+    animation: pulseText 2s infinite;
+    z-index: 2;
+}
+
+/* Animations */
+@keyframes moveBlob { 0% { transform: translate(-10px, -10px) scale(1); } 100% { transform: translate(10px, 10px) scale(1.1); } }
+@keyframes floatCard { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-10px) rotate(1deg); } }
+@keyframes scanLine { 0% { transform: translateX(-100%); } 50%, 100% { transform: translateX(100%); } }
+@keyframes pulseText { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+
+/* Library Overrides */
+.pptx-view-workspace .pptx-preview-wrapper {
+    width: auto !important; height: auto !important;
+    overflow: visible !important; margin: 0 auto !important;
+    background: transparent !important;
+}
+.pptx-view-workspace .pptx-preview-slide-wrapper {
+    display: block !important; position: relative !important;
+    margin-bottom: 15px !important; 
+    margin-left: auto !important; margin-right: auto !important;
+    /* Blur behind slides */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.175);
+    border: 1px solid var(--background-modifier-border);
+}

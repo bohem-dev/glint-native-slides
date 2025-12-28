@@ -1,0 +1,10 @@
+{
+	"id": "glint-native-slides",
+	"name": "Glint Native Slides",
+	"version": "1.0.0",
+	"minAppVersion": "1.0.0",
+	"description": "A liquid-smooth local viewer for PowerPoint (.pptx) files.",
+	"author": "Philip Press",
+	"authorUrl": "https://github.com/bohem-dev",
+	"isDesktopOnly": false
+}

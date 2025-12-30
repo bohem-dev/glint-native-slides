@@ -4,7 +4,6 @@ import { init } from 'pptx-preview';
 export const VIEW_TYPE_PPTX = "pptx-view";
 
 export class PptxView extends FileView {
-    // FIX: Use '!' for definite assignment and infer the type from the library
     previewer!: ReturnType<typeof init>;
     
     wrapperEl: HTMLElement | null = null;
@@ -21,7 +20,6 @@ export class PptxView extends FileView {
     getViewType() { return VIEW_TYPE_PPTX; }
     getDisplayText() { return this.file ? this.file.basename : "Glint Native Slides"; }
 
-    // FIX: Removed 'async'. We return Promise.resolve() at the end to satisfy the interface.
     onOpen() {
         this.contentEl.empty();
         this.contentEl.addClass("pptx-view-workspace");
@@ -73,7 +71,6 @@ export class PptxView extends FileView {
 
         this.registerDomEvent(window, 'resize', () => {});
         
-        // Returns a promise to satisfy FileView contract without triggering "unused async" linter
         return Promise.resolve();
     }
 
@@ -105,7 +102,6 @@ export class PptxView extends FileView {
         }
     }
 
-    // This stays async because it actually uses 'await'
     async onLoadFile(file: TFile) {
         this.showLoader();
 
@@ -140,12 +136,10 @@ export class PptxView extends FileView {
 
     applyZoom() {
         if (this.wrapperEl) {
-            // FIX: setProperty prevents the need for 'as any'
             this.wrapperEl.style.setProperty('zoom', this.currentZoom.toString());
         }
     }
 
-    // FIX: Removed 'async', explicitly return resolved promise
     onClose() {
         this.contentEl.empty();
         return Promise.resolve();

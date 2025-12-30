@@ -4,7 +4,7 @@ export class PptxRenderChild extends MarkdownRenderChild {
     constructor(containerEl: HTMLElement, public file: TFile, public app: App) {
         super(containerEl);
     }
-    async onload() {
+    onload() {
         // Currently empty
     }
 }

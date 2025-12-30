@@ -4,7 +4,9 @@ import { init } from 'pptx-preview';
 export const VIEW_TYPE_PPTX = "pptx-view";
 
 export class PptxView extends FileView {
-    previewer: any;
+    // FIX: Use '!' for definite assignment and infer the type from the library
+    previewer!: ReturnType<typeof init>;
+    
     wrapperEl: HTMLElement | null = null;
     loaderEl: HTMLElement | null = null;
     
@@ -19,7 +21,8 @@ export class PptxView extends FileView {
     getViewType() { return VIEW_TYPE_PPTX; }
     getDisplayText() { return this.file ? this.file.basename : "Glint Native Slides"; }
 
-    async onOpen() {
+    // FIX: Removed 'async'. We return Promise.resolve() at the end to satisfy the interface.
+    onOpen() {
         this.contentEl.empty();
         this.contentEl.addClass("pptx-view-workspace");
         
@@ -27,7 +30,7 @@ export class PptxView extends FileView {
         this.wrapperEl = this.contentEl.createDiv({ cls: 'pptx-viewer-container' });
         
         // Zoom Handler
-        this.contentEl.addEventListener("wheel", (evt) => {
+        this.contentEl.addEventListener("wheel", (evt: WheelEvent) => {
             if (evt.ctrlKey) {
                 evt.preventDefault();
                 let delta = 0;
@@ -69,6 +72,9 @@ export class PptxView extends FileView {
         });
 
         this.registerDomEvent(window, 'resize', () => {});
+        
+        // Returns a promise to satisfy FileView contract without triggering "unused async" linter
+        return Promise.resolve();
     }
 
     createLoader() {
@@ -87,22 +93,19 @@ export class PptxView extends FileView {
 
     showLoader() {
         if (this.loaderEl && this.wrapperEl) {
-            // FADE IN
             this.loaderEl.addClass("active");
-            // Hide content visually
             this.wrapperEl.addClass("hidden");
         }
     }
 
     hideLoader() {
         if (this.loaderEl && this.wrapperEl) {
-            // FADE OUT
             this.loaderEl.removeClass("active");
-            // Show content
             this.wrapperEl.removeClass("hidden");
         }
     }
 
+    // This stays async because it actually uses 'await'
     async onLoadFile(file: TFile) {
         this.showLoader();
 
@@ -115,7 +118,6 @@ export class PptxView extends FileView {
             await this.previewer.preview(buffer);
             this.fitToScreen();
             
-            // FADE OUT SEQUENCE (Restored)
             setTimeout(() => {
                 this.hideLoader();
             }, 200);
@@ -138,11 +140,14 @@ export class PptxView extends FileView {
 
     applyZoom() {
         if (this.wrapperEl) {
-            (this.wrapperEl.style as any).zoom = this.currentZoom.toString();
+            // FIX: setProperty prevents the need for 'as any'
+            this.wrapperEl.style.setProperty('zoom', this.currentZoom.toString());
         }
     }
 
-    async onClose() {
+    // FIX: Removed 'async', explicitly return resolved promise
+    onClose() {
         this.contentEl.empty();
+        return Promise.resolve();
     }
 }

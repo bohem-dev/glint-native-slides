@@ -11,14 +11,14 @@ Glint is a native slide renderer for Obsidian. Built with a focus on aesthetics 
 ![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-brightgreen)
 [![Ko-Fi](https://img.shields.io/badge/Ko--fi-Support%20a%20Tired%20Student%20<3-F16061?logo=ko-fi&logoColor=white)](https://ko-fi.com/bohemdev)
 
-## ✨ Features
+## Features
 
 - **Native Rendering:** No cloud, no PDFs. Pure local `.pptx` processing.
 - More planned :)
 
 ---
 
-## 🛠 Project Pipeline (Roadmap)
+## Project Pipeline (Roadmap)
 
 I'm building this in my spare time between lectures. Here is what's on the horizon:
 
@@ -29,11 +29,11 @@ I'm building this in my spare time between lectures. Here is what's on the horiz
 
 ---
 
-## 📜 Credits & Thanks
+## Credits & Thanks
 
 This plugin works solely because of the incredible work by **hit757** on the [pptx-preview](https://github.com/501351981/pptx-preview) library. Much obliged.
 
-## 🚀 Installation
+## Installation
 
 1. Install.
 2. Enable **Glint Native Slides** in your community plugins.
